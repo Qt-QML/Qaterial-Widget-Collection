@@ -40,7 +40,7 @@ CheckableListViewDelegate 1.0 CheckableListViewDelegate.qml
 CircularMinute 1.0 CircularMinute.qml
 CircularMinutePicker 1.0 CircularMinutePicker.qml
 CircularPathLabel 1.0 CircularPathLabel.qml
-ClusturedTabBar 1.0 ClusturedTabBar.qml
+ClusteredTabBar 1.0 ClusteredTabBar.qml
 ColorAlphaSlider 1.0 ColorAlphaSlider.qml
 ColorBlueSlider 1.0 ColorBlueSlider.qml
 ColorButton 1.0 ColorButton.qml
@@ -56,8 +56,8 @@ ColorValueSlider 1.0 ColorValueSlider.qml
 ColorYellowSlider 1.0 ColorYellowSlider.qml
 ComboBox 1.0 ComboBox.qml
 CursorDelegate 1.0 CursorDelegate.qml
-singleton Data 1.0 Data.qml
-singleton Date 1.0 Date.qml
+singleton DataFormat 1.0 DataFormat.qml
+singleton DateFormat 1.0 DateFormat.qml
 DatePickerDialog 1.0 DatePickerDialog.qml
 DebugObject 1.0 DebugObject.qml
 DebugRectangle 1.0 DebugRectangle.qml
