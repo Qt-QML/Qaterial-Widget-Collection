@@ -12,18 +12,17 @@ import Qaterial 1.0 as Qaterial
 
 Item
 {
-  implicitHeight: _label.font.pixelSize*3
+  implicitHeight: _label.font.pixelSize * 3
   implicitWidth: 200
   property alias supportingText: _label.text
 
-  Qaterial.Label
+  Qaterial.LabelBody1
   {
     id: _label
     wrapMode: Text.WordWrap
     elide: Text.ElideRight
     maximumLineCount: 2
     verticalAlignment: Text.AlignVCenter
-    textType: Qaterial.Style.TextType.ListSecText
     anchors.fill: parent
   } // Label
 } // Item

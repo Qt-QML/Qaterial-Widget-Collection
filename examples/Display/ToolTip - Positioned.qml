@@ -12,13 +12,13 @@ Item
     Qaterial.SnackbarManager.show(`ToolTip Position Copied! \n'${textToCopy}'`)
   }
 
-  width: 2*bottomLeft.width + rectangle.width  + 2*bottomRight.width
-  height: 2*top.height + rectangle.height + 2*bottom.height + label.height + 20
+  width: 2 * bottomLeft.width + rectangle.width + 2 * bottomRight.width
+  height: 2 * top.height + rectangle.height + 2 * bottom.height + label.height + 20
 
-  Qaterial.Label
+  Qaterial.LabelCaption
   {
     id: label
-    x: (parent.width - width)/2
+    x: (parent.width - width) / 2
     y: 5
     width: parent.width
     horizontalAlignment: Text.AlignHCenter
@@ -26,7 +26,6 @@ Item
     wrapMode: Text.Wrap
     elide: Text.ElideRight
     text: "ToolTip are displayed spaced apart by \"margins/2\" pixels from their parent's border (default: margins = 12)"
-    textType: Qaterial.Style.TextType.Caption
   }
 
   Rectangle
@@ -81,7 +80,7 @@ Item
     {
       //Qaterial.DebugRectangle { anchors.fill: parent; border.color: "pink" }
       id: top
-      x: (parent.width - width)/2
+      x: (parent.width - width) / 2
       y: -height
       text: "Top"
       highlighted: false
@@ -158,7 +157,7 @@ Item
       //Qaterial.DebugRectangle { anchors.fill: parent; border.color: "pink" }
       id: right
       x: parent.width
-      y: (parent.height - height)/2
+      y: (parent.height - height) / 2
       text: "Right"
       highlighted: false
 
@@ -233,7 +232,7 @@ Item
     {
       //Qaterial.DebugRectangle { anchors.fill: parent; border.color: "pink" }
       id: bottom
-      x: (parent.width - width)/2
+      x: (parent.width - width) / 2
       y: parent.height
       text: "Bottom"
       highlighted: false
@@ -310,7 +309,7 @@ Item
       //Qaterial.DebugRectangle { anchors.fill: parent; border.color: "pink" }
       id: left
       x: -width
-      y: (parent.height - height)/2
+      y: (parent.height - height) / 2
       text: "Left"
       highlighted: false
 
@@ -347,8 +346,8 @@ Item
     {
       //Qaterial.DebugRectangle { anchors.fill: parent; border.color: "pink" }
       id: center
-      x: (parent.width - width)/2
-      y: (parent.height - height)/2
+      x: (parent.width - width) / 2
+      y: (parent.height - height) / 2
       text: "Center"
       highlighted: false
 

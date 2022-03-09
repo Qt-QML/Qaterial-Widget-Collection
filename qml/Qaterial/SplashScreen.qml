@@ -24,12 +24,12 @@ Rectangle
   {
     id: logo
     source: root.image
-    width: parent.width - root.padding*2
+    width: parent.width - root.padding * 2
     anchors.centerIn: parent
     fillMode: Image.PreserveAspectFit
   }
 
-  Qaterial.Label
+  Qaterial.LabelCaption
   {
     id: stateText
 
@@ -39,10 +39,9 @@ Rectangle
     anchors.leftMargin: Qaterial.Style.card.horizontalPadding
 
     text: root.text
-    textType: Qaterial.Style.TextType.Caption
   }
 
-  Qaterial.Label
+  Qaterial.LabelCaption
   {
     id: hintText
 
@@ -51,7 +50,6 @@ Rectangle
     anchors.rightMargin: Qaterial.Style.card.horizontalPadding
 
     text: root.version
-    textType: Qaterial.Style.TextType.Caption
   }
 
   Qaterial.ProgressBar

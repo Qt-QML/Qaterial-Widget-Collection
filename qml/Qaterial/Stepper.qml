@@ -15,11 +15,11 @@ Item
   id: root
 
   implicitWidth: vertical ?
-                (indicatorLeftPadding + indicatorWidth + indicatorRightPadding + contentItemWidth + contentItemHorizontalPadding) :
-                (count * (contentItemWidth + 2*contentItemHorizontalPadding))
+    (indicatorLeftPadding + indicatorWidth + indicatorRightPadding + contentItemWidth + contentItemHorizontalPadding) : (count * (contentItemWidth + 2 * contentItemHorizontalPadding))
   implicitHeight: vertical ?
-                (count * (indicatorTopPadding + indicatorHeight + indicatorBottomPadding + separatorHeight/2)) :
-                (indicatorTopPadding + indicatorHeight + indicatorBottomPadding + contentItemHeight + 2*contentItemVerticalPadding)
+    (count * (indicatorTopPadding + indicatorHeight + indicatorBottomPadding + separatorHeight / 2)) : (
+      indicatorTopPadding + indicatorHeight + indicatorBottomPadding + contentItemHeight + 2 *
+      contentItemVerticalPadding)
 
   // ──── General ──── //
   property bool clickable: true
@@ -70,7 +70,7 @@ Item
     property int index
     readonly property bool done: element && element.done
 
-    radius: width/2
+    radius: width / 2
     color:
     {
       if(currentIndex >= index)
@@ -90,11 +90,10 @@ Item
     Component
     {
       id: stepNumber
-      Qaterial.Label
+      Qaterial.LabelButton
       {
         anchors.centerIn: parent
         text: index + 1
-        textType: Qaterial.Style.TextType.Button
       } // Label
     } // Component
     Loader
@@ -134,8 +133,8 @@ Item
   property string nextRole: "next"
 
   // ──── Private properties ──── //
-  readonly property int _stepperWidth: width/count
-  readonly property int _stepperHeight: height/count
+  readonly property int _stepperWidth: width / count
+  readonly property int _stepperHeight: height / count
 
   Repeater
   {
@@ -156,8 +155,8 @@ Item
       Loader
       {
         id: _indicatorLoader
-        x: root.vertical ? root.indicatorLeftPadding : (root._stepperWidth/2 - root.indicatorWidth/2)
-        y: root.vertical ? (root._stepperHeight/2 - root.indicatorHeight/2) : root.indicatorTopPadding
+        x: root.vertical ? root.indicatorLeftPadding : (root._stepperWidth / 2 - root.indicatorWidth / 2)
+        y: root.vertical ? (root._stepperHeight / 2 - root.indicatorHeight / 2) : root.indicatorTopPadding
 
         sourceComponent: root.indicator
 
@@ -187,11 +186,11 @@ Item
       {
         id: _contentItemLoader
         x: root.vertical ?
-         (root.indicatorLeftPadding + root.indicatorWidth + root.indicatorRightPadding) :
-         (root._stepperWidth/2 - root.contentItemWidth/2)
+          (root.indicatorLeftPadding + root.indicatorWidth + root.indicatorRightPadding) : (root._stepperWidth / 2 -
+            root.contentItemWidth / 2)
         y: root.vertical ?
-         (root._stepperHeight/2 - root.contentItemHeight/2) :
-         (root.indicatorTopPadding + root.indicatorHeight + root.indicatorBottomPadding)
+          (root._stepperHeight / 2 - root.contentItemHeight / 2) : (root.indicatorTopPadding + root.indicatorHeight +
+            root.indicatorBottomPadding)
 
         sourceComponent: root.contentItem
 
@@ -237,19 +236,19 @@ Item
       id: _separatorLoader
 
       x: root.vertical ?
-       (root.indicatorLeftPadding + root.indicatorWidth/2 - root.separatorWidth/2) :
-       (root._stepperWidth/2 + root.indicatorWidth/2 + root.indicatorLeftPadding + index * root._stepperWidth)
+        (root.indicatorLeftPadding + root.indicatorWidth / 2 - root.separatorWidth / 2) : (root._stepperWidth / 2 +
+          root.indicatorWidth / 2 + root.indicatorLeftPadding + index * root._stepperWidth)
 
       y: root.vertical ?
-       (root._stepperHeight/2 + root.indicatorHeight/2 + root.indicatorTopPadding + index * root._stepperHeight) :
-       (root.indicatorTopPadding + root.indicatorHeight/2 - root.separatorHeight/2)
+        (root._stepperHeight / 2 + root.indicatorHeight / 2 + root.indicatorTopPadding + index * root
+          ._stepperHeight) : (root.indicatorTopPadding + root.indicatorHeight / 2 - root.separatorHeight / 2)
 
       width: root.vertical ?
-           root.separatorWidth :
-           (root._stepperWidth - root.indicatorWidth - root.indicatorLeftPadding - root.indicatorRightPadding)
+        root.separatorWidth : (root._stepperWidth - root.indicatorWidth - root.indicatorLeftPadding - root
+          .indicatorRightPadding)
       height: root.vertical ?
-            (root._stepperHeight - root.indicatorHeight - root.indicatorTopPadding - root.indicatorBottomPadding) :
-            root.separatorHeight
+        (root._stepperHeight - root.indicatorHeight - root.indicatorTopPadding - root.indicatorBottomPadding) : root
+        .separatorHeight
 
       sourceComponent: root.separator
 
@@ -267,7 +266,7 @@ Item
         target: _separatorLoader.item
         when: _separatorLoader.item && _separatorLoader.item.hasOwnProperty(root.nextRole)
         property: root.nextRole
-        value: root.model.get(index+1)
+        value: root.model.get(index + 1)
         restoreMode: Binding.RestoreNone
       } // Binding for next
 

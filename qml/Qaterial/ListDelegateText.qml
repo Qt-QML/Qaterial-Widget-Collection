@@ -33,7 +33,8 @@ Rectangle
 
   readonly property int lines: (secondaryText != "" ? _info.lineCount : 0) + 1
   property int elide: mirrored ? Text.ElideLeft : Text.ElideRight
-  property int textAligment: mirrored ? alignTextRight ? Text.AlignLeft : Text.AlignRight : alignTextRight ? Text.AlignRight : Text.AlignLeft
+  property int textAligment: mirrored ? alignTextRight ? Text.AlignLeft : Text.AlignRight : alignTextRight ? Text
+    .AlignRight : Text.AlignLeft
 
   Qaterial.DebugRectangle
   {
@@ -56,17 +57,16 @@ Rectangle
     _text.reanchors()
   } // function reanchors()
 
-  onMirroredChanged: Qt.callLater(reanchors)
-  onTypeChanged: Qt.callLater(reanchors)
-  onLinesChanged: Qt.callLater(reanchors)
+  onMirroredChanged: reanchors()
+  onTypeChanged: reanchors()
+  onLinesChanged: reanchors()
   Component.onCompleted: reanchors()
 
-  Qaterial.Label
+  Qaterial.LabelOverline
   {
     id: _overline
-    visible : text != ""
+    visible: text != ""
     enabled: _control.enabled
-    textType: Qaterial.Style.TextType.Overline
     elide: _control.elide
     onPrimary: _control.onPrimary
     colorReversed: _control.colorReversed
@@ -88,12 +88,11 @@ Rectangle
     } // DebugRectangle
   } // Label
 
-  Qaterial.Label
+  Qaterial.LabelBody1
   {
     id: _text
-    visible : text != ""
+    visible: text != ""
     enabled: _control.enabled
-    textType: Qaterial.Style.TextType.ListText
     elide: _control.elide
     onPrimary: _control.onPrimary
     colorReversed: _control.colorReversed
@@ -115,9 +114,9 @@ Rectangle
       anchors.verticalCenter = undefined
 
       if(centerBaseline)
-          anchors.baseline = _control.top
+        anchors.baseline = _control.top
       else
-          anchors.verticalCenter = _control.verticalCenter
+        anchors.verticalCenter = _control.verticalCenter
     } // function reanchors()
 
     Qaterial.DebugRectangle
@@ -128,12 +127,11 @@ Rectangle
     } // DebugRectangle
   } // Label
 
-  Qaterial.Label
+  Qaterial.LabelBody2
   {
     id: _info
-    visible : text != ""
+    visible: text != ""
     enabled: _control.enabled
-    textType: Qaterial.Style.TextType.ListSecText
     elide: _control.elide
     maximumLineCount: 2
     onPrimary: _control.onPrimary

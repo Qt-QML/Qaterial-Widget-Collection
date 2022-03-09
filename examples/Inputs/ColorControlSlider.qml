@@ -28,11 +28,10 @@ Column
       ToolTip.visible: hovered || pressed
     }
 
-    Qaterial.Label
+    Qaterial.LabelHeadline5
     {
       anchors.verticalCenter: parent.verticalCenter
       width: 200
-      textType: Qaterial.Style.TextType.Heading
       text: `Color: ${root.color.toString().toUpperCase()}`
     }
   }
@@ -48,9 +47,8 @@ Column
     spacing: 16
     Column
     {
-      Qaterial.Label
+      Qaterial.LabelOverline
       {
-        textType: Qaterial.Style.TextType.Overline
         text: `Red: ${redSlider.value.toFixed(2)}`
       }
 
@@ -63,9 +61,8 @@ Column
         onMoved: () => root.color = getNewColor()
       }
 
-      Qaterial.Label
+      Qaterial.LabelOverline
       {
-        textType: Qaterial.Style.TextType.Overline
         text: `Green: ${greenSlider.value.toFixed(2)}`
       }
 
@@ -78,15 +75,14 @@ Column
         onMoved: () => root.color = getNewColor()
       }
 
-      Qaterial.Label
+      Qaterial.LabelOverline
       {
-        textType: Qaterial.Style.TextType.Overline
         text: `Blue: ${blueSlider.value.toFixed(2)}`
       }
 
       Qaterial.ColorBlueSlider
       {
-        id:  blueSlider
+        id: blueSlider
         anchors.horizontalCenter: parent.horizontalCenter
         color: root.color
 
@@ -102,9 +98,8 @@ Column
 
     Column
     {
-      Qaterial.Label
+      Qaterial.LabelOverline
       {
-        textType: Qaterial.Style.TextType.Overline
         text: `Hue: ${hueSlider.value.toFixed(2)}`
       }
 
@@ -117,9 +112,8 @@ Column
         onMoved: () => root.color = getNewColor()
       }
 
-      Qaterial.Label
+      Qaterial.LabelOverline
       {
-        textType: Qaterial.Style.TextType.Overline
         text: `Saturation: ${saturationSlider.value.toFixed(2)}`
       }
 
@@ -132,9 +126,8 @@ Column
         onMoved: () => root.color = getNewColor()
       }
 
-      Qaterial.Label
+      Qaterial.LabelOverline
       {
-        textType: Qaterial.Style.TextType.Overline
         text: `Value: ${valueSlider.value.toFixed(2)}`
       }
 
@@ -156,9 +149,8 @@ Column
 
     Column
     {
-      Qaterial.Label
+      Qaterial.LabelOverline
       {
-        textType: Qaterial.Style.TextType.Overline
         text: `Hue: ${hueSliderHsl.value.toFixed(2)}`
       }
 
@@ -171,9 +163,8 @@ Column
         onMoved: () => root.color = getNewColor()
       }
 
-      Qaterial.Label
+      Qaterial.LabelOverline
       {
-        textType: Qaterial.Style.TextType.Overline
         text: `Saturation: ${saturationSliderHsl.value.toFixed(2)}`
       }
 
@@ -186,9 +177,8 @@ Column
         onMoved: () => root.color = getNewColor()
       }
 
-      Qaterial.Label
+      Qaterial.LabelOverline
       {
-        textType: Qaterial.Style.TextType.Overline
         text: `Lightness: ${valueSliderHsl.value.toFixed(2)}`
       }
 
@@ -224,7 +214,10 @@ Column
     width: parent.width
     Repeater
     {
-      model: ['#f44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#9E9E9E', '#607D8B', '#263238', '#212121', '#3E2723', '#000000', '#FFFFFF']
+      model: ['#f44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688',
+        '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#9E9E9E', '#607D8B', '#263238',
+        '#212121', '#3E2723', '#000000', '#FFFFFF'
+      ]
       delegate: Qaterial.ColorMiniButton
       {
         color: modelData

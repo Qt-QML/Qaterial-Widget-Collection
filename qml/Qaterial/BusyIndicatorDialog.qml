@@ -13,7 +13,7 @@ import Qaterial 1.0 as Qaterial
 
 Qaterial.ModalDialog
 {
-  id: _control
+  id: root
 
   property alias text: _text.text
   width: undefined
@@ -23,7 +23,7 @@ Qaterial.ModalDialog
   {
     implicitHeight: Math.floor(_busy.implicitHeight + _text.implicitHeight + Qaterial.Style.card.verticalPadding)
 
-    implicitWidth: Qaterial.Style.dialog.implicitWidth - 2*Qaterial.Style.card.horizontalPadding
+    implicitWidth: Qaterial.Style.dialog.implicitWidth - 2 * Qaterial.Style.card.horizontalPadding
 
     Qaterial.BusyIndicator
     {
@@ -35,11 +35,11 @@ Qaterial.ModalDialog
     {
       id: _text
 
-      text: _control.text
+      text: root.text
       anchors.horizontalCenter: parent.horizontalCenter
       y: _busy.height + Qaterial.Style.card.verticalPadding
       width: parent.width
-      textType: Qaterial.Style.TextType.ListText
+      font: root.font
       color: Qaterial.Style.secondaryTextColor()
       elide: Text.ElideRight
       horizontalAlignment: Text.AlignHCenter

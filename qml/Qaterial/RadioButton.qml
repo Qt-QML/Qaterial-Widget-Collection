@@ -16,10 +16,10 @@ T.RadioButton
   id: _control
 
   implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                          implicitContentWidth + leftPadding + rightPadding + implicitIndicatorWidth)
+    implicitContentWidth + leftPadding + rightPadding + implicitIndicatorWidth)
   implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
-                           implicitContentHeight + topPadding + bottomPadding,
-                           implicitIndicatorHeight + topPadding + bottomPadding)
+    implicitContentHeight + topPadding + bottomPadding,
+    implicitIndicatorHeight + topPadding + bottomPadding)
 
   horizontalPadding: Qaterial.Style.radioButton.horizontalPadding
   verticalPadding: Qaterial.Style.radioButton.verticalPadding
@@ -30,8 +30,7 @@ T.RadioButton
 
   property bool drawline: Qaterial.Style.debug.drawDebugButton
 
-  property alias elide: _label.elide
-  property alias textType: _label.textType
+  font: Qaterial.Style.textTheme.body2
 
   Qaterial.DebugRectangle
   {
@@ -42,7 +41,8 @@ T.RadioButton
 
   indicator: Qaterial.RadioIndicator
   {
-    x: text ? (_control.mirrored ? _control.width - width - _control.rightPadding : _control.leftPadding) : _control.leftPadding + (_control.availableWidth - width) / 2
+    x: text ? (_control.mirrored ? _control.width - width - _control.rightPadding : _control.leftPadding) : _control
+      .leftPadding + (_control.availableWidth - width) / 2
     y: _control.topPadding + (_control.availableHeight - height) / 2
     control: _control
 
@@ -57,7 +57,8 @@ T.RadioButton
       anchor: _control
       pressed: _control.pressed
       active: _control.down || _control.visualFocus || _control.hovered
-      color: Qaterial.Style.rippleColor(_control.checked ? Qaterial.Style.RippleBackground.AccentLight : Qaterial.Style.RippleBackground.Background)
+      color: Qaterial.Style.rippleColor(_control.checked ? Qaterial.Style.RippleBackground.AccentLight : Qaterial
+        .Style.RippleBackground.Background)
     } // Ripple
 
     Qaterial.DebugRectangle
@@ -70,7 +71,6 @@ T.RadioButton
 
   contentItem: Qaterial.Label
   {
-    id: _label
     leftPadding: _control.indicator && !_control.mirrored ? _control.indicator.width + _control.spacing : 0
     rightPadding: _control.indicator && _control.mirrored ? _control.indicator.width + _control.spacing : 0
 
@@ -78,6 +78,7 @@ T.RadioButton
     colorReversed: _control.colorReversed
 
     text: _control.text
+    font: _control.font
     enabled: _control.enabled
     verticalAlignment: Text.AlignVCenter
     elide: !_control.mirrored ? Text.ElideRight : Text.ElideLeft

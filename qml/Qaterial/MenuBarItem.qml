@@ -17,9 +17,9 @@ T.MenuBarItem
   id: _control
 
   implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                          implicitContentWidth + leftPadding + rightPadding)
+    implicitContentWidth + leftPadding + rightPadding)
   implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
-                           implicitContentHeight + topPadding + bottomPadding)
+    implicitContentHeight + topPadding + bottomPadding)
 
   property bool drawline: Qaterial.Style.debug.drawDebugButton
 
@@ -35,22 +35,24 @@ T.MenuBarItem
   leftInset: Qaterial.Style.menuBarItem.leftInset
   rightInset: Qaterial.Style.menuBarItem.rightInset
 
-  property alias textType: _iconLabel.textType
-
-  leftPadding: (icon.source != "" && !mirrored || text == "" ? Qaterial.Style.menuBarItem.iconPadding : Qaterial.Style.menuBarItem.padding) + leftInset
-  rightPadding: (icon.source != "" && mirrored || text == "" ? Qaterial.Style.menuBarItem.iconPadding : Qaterial.Style.menuBarItem.padding) + rightInset
+  leftPadding: (icon.source != "" && !mirrored || text == "" ? Qaterial.Style.menuBarItem.iconPadding : Qaterial.Style
+    .menuBarItem.padding) + leftInset
+  rightPadding: (icon.source != "" && mirrored || text == "" ? Qaterial.Style.menuBarItem.iconPadding : Qaterial.Style
+    .menuBarItem.padding) + rightInset
   topPadding: 0
   bottomPadding: 0
   spacing: Qaterial.Style.menuBarItem.spacing
 
   property bool outlined: false
 
-  property color foregroundColor: enabled ? (colorReversed ? Qaterial.Style.primaryTextColorReversed() : Qaterial.Style.primaryTextColor()) :
-                                  (colorReversed ? Qaterial.Style.hintTextColorReversed() : hintTextColor.primaryTextColor())
+  property color foregroundColor: enabled ? (colorReversed ? Qaterial.Style.primaryTextColorReversed() : Qaterial
+    .Style.primaryTextColor()) : (colorReversed ? Qaterial.Style.hintTextColorReversed() : hintTextColor
+    .primaryTextColor())
 
   property color backgroundColor: "transparent"
 
-  property color rippleColor: Qaterial.Style.rippleColor(onPrimary ? Qaterial.Style.RippleBackground.Primary : Qaterial.Style.RippleBackground.Background)
+  property color rippleColor: Qaterial.Style.rippleColor(onPrimary ? Qaterial.Style.RippleBackground.Primary :
+    Qaterial.Style.RippleBackground.Background)
 
   property bool onPrimary: false
   property bool colorReversed: onPrimary && Qaterial.Style.shouldReverseForegroundOnPrimary
@@ -61,6 +63,8 @@ T.MenuBarItem
   icon.height: Qaterial.Style.menuBarItem.iconWidth
   icon.color: foregroundColor
 
+  font: Qaterial.Style.textTheme.button
+
   property bool clipRipple: true
   property bool forceRipple: false
   property bool accentRipple: false
@@ -70,9 +74,13 @@ T.MenuBarItem
     id: _iconLabel
     spacing: _control.spacing
     display: _control.display
-    icon: _control.icon
+    icon.source: _control.icon.source
+    icon.width: _control.icon.width
+    icon.height: _control.icon.height
+    icon.color: _control.icon.color
+    icon.cache: _control.icon.cache
     text: _control.text
-    textType: Qaterial.Style.TextType.Menu
+    font: _control.font
     color: _control.foregroundColor
   } // IconLabel
 

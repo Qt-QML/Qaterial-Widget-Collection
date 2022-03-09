@@ -1,59 +1,91 @@
+# MIT License
 #
-#   Qaterial CMake script by Olivier Le Doeuff
+# Copyright (c) 2020 Olivier Le Doeuff
 #
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
-cmake_minimum_required(VERSION 3.14.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15.0 FATAL_ERROR)
+
+set(QATERIAL_MAIN_PROJECT OFF)
+if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+  set(QATERIAL_MAIN_PROJECT ON)
+endif()
 
 # ───── PROJECT OPTIONS ─────
 
-set(QATERIAL_VERSION_MAJOR 1)
-set(QATERIAL_VERSION_MINOR 2)
-set(QATERIAL_VERSION_PATCH 1)
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.git")
-  execute_process(
-    COMMAND git rev-parse --short HEAD
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    OUTPUT_VARIABLE QATERIAL_VERSION_TAG
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-endif()
-if(NOT QATERIAL_VERSION_TAG)
-  set(QATERIAL_VERSION_TAG 00000000)
-endif()
-set(QATERIAL_VERSION_TAG_HEX 0x${QATERIAL_VERSION_TAG})
-set(QATERIAL_VERSION ${QATERIAL_VERSION_MAJOR}.${QATERIAL_VERSION_MINOR}.${QATERIAL_VERSION_PATCH} CACHE STRING "Version of Qaterial")
+include(cmake/Version.cmake)
 
-# Options
 set(QATERIAL_PROJECT "Qaterial" CACHE STRING "Project Name")
 set(QATERIAL_TARGET ${QATERIAL_PROJECT} CACHE STRING "Target Name")
 set(QATERIAL_FOLDER_PREFIX ${QATERIAL_PROJECT} CACHE STRING "Prefix folder for all Qaterial generated targets in generated project (only decorative)")
+set(QATERIAL_VERBOSE ${QATERIAL_MAIN_PROJECT} CACHE BOOL "Qaterial log configuration")
 set(QATERIAL_BUILD_SHARED OFF CACHE BOOL "Build as a shared library")
-set(QATERIAL_ENABLE_HOTRELOAD OFF CACHE BOOL "Build Qaterial HotReload executable")
-set(QATERIAL_ENABLE_HOTRELOAD_LIB ${QATERIAL_ENABLE_HOTRELOAD} CACHE BOOL "Build Qaterial HotReload executable")
-set(QATERIAL_ENABLE_HELLOWORLD OFF CACHE BOOL "Build Qaterial HelloWorld executable")
 set(QATERIAL_ENABLE_TESTS OFF CACHE BOOL "Build Qaterial test executable")
 set(QATERIAL_ENABLE_PCH ON CACHE BOOL
  "Enable precompile headers support for 'Qaterial'. \"
  Only work if CMake support 'target_precompile_headers'. \"
  This can speed up compilation time.")
+set(QATERIAL_ENABLE_UNITY_BUILD ON CACHE BOOL "Qaterial source files will be combined into batches for faster compilation.")
+set(QATERIAL_ENABLE_HIGHDPIFIX ON CACHE BOOL "Fix high dpi at application startup without any additional code")
 
+set(QATERIAL_ENABLE_ICONS ON CACHE BOOL "Embed Mdi Icons in Qaterial.Icons (MATERIALDESIGNICONS_REPOSITORY)")
 set(QATERIAL_ICONS "*.svg" CACHE STRING "Filter embedded icons")
 
-project(${QATERIAL_PROJECT} VERSION ${QATERIAL_VERSION} LANGUAGES CXX)
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set(QATERIAL_ENABLE_ROBOTO ON CACHE BOOL "Embed to qrc Roboto Regular & Medium")
+set(QATERIAL_ENABLE_ROBOTOMONO ON CACHE BOOL "Embed to qrc RobotoMono Regular")
+set(QATERIAL_ENABLE_LATO ON CACHE BOOL "Embed to qrc Lato Regular")
 
-message(STATUS "------ ${QATERIAL_TARGET} Configuration ------")
-message(STATUS "QATERIAL_PROJECT                : ${QATERIAL_PROJECT}")
-message(STATUS "QATERIAL_TARGET                 : ${QATERIAL_TARGET}")
-message(STATUS "QATERIAL_VERSION                : ${QATERIAL_VERSION}")
-message(STATUS "QATERIAL_VERSION_TAG_HEX        : ${QATERIAL_VERSION_TAG_HEX}")
-message(STATUS "QATERIAL_BUILD_SHARED           : ${QATERIAL_BUILD_SHARED}")
-message(STATUS "QATERIAL_FOLDER_PREFIX          : ${QATERIAL_FOLDER_PREFIX}")
-message(STATUS "QATERIAL_ENABLE_HOTRELOAD       : ${QATERIAL_ENABLE_HOTRELOAD}")
-message(STATUS "QATERIAL_ENABLE_HOTRELOAD_LIB   : ${QATERIAL_ENABLE_HOTRELOAD_LIB}")
-message(STATUS "QATERIAL_ENABLE_HELLOWORLD      : ${QATERIAL_ENABLE_HELLOWORLD}")
-message(STATUS "QATERIAL_ENABLE_TESTS           : ${QATERIAL_ENABLE_TESTS}")
-message(STATUS "------ ${QATERIAL_TARGET} End Configuration ------")
+set(QATERIAL_ENABLE_INSTALL ${QATERIAL_MAIN_PROJECT} CACHE BOOL "Generate the install target")
+
+project(${QATERIAL_PROJECT} VERSION ${QATERIAL_VERSION} LANGUAGES CXX)
+if(QATERIAL_MAIN_PROJECT)
+  set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+endif()
+
+if(QATERIAL_VERBOSE)
+
+  message(STATUS "------ ${QATERIAL_TARGET} Configuration ------")
+
+  message(STATUS "QATERIAL_PROJECT                : ${QATERIAL_PROJECT}")
+  message(STATUS "QATERIAL_TARGET                 : ${QATERIAL_TARGET}")
+  message(STATUS "QATERIAL_VERSION                : ${QATERIAL_VERSION}")
+  message(STATUS "QATERIAL_VERSION_TAG_HEX        : ${QATERIAL_VERSION_TAG_HEX}")
+  message(STATUS "QATERIAL_BUILD_SHARED           : ${QATERIAL_BUILD_SHARED}")
+  message(STATUS "QATERIAL_FOLDER_PREFIX          : ${QATERIAL_FOLDER_PREFIX}")
+  message(STATUS "QATERIAL_ENABLE_PCH             : ${QATERIAL_ENABLE_PCH}")
+  message(STATUS "QATERIAL_ENABLE_UNITY_BUILD     : ${QATERIAL_ENABLE_UNITY_BUILD}")
+  message(STATUS "QATERIAL_ENABLE_HIGHDPIFIX      : ${QATERIAL_ENABLE_HIGHDPIFIX}")
+
+  message(STATUS "QATERIAL_ENABLE_ICONS           : ${QATERIAL_ENABLE_ICONS}")
+  message(STATUS "QATERIAL_ICONS                  : ${QATERIAL_ICONS}")
+
+  message(STATUS "QATERIAL_ENABLE_ROBOTO          : ${QATERIAL_ENABLE_ROBOTO}")
+  message(STATUS "QATERIAL_ENABLE_ROBOTOMONO      : ${QATERIAL_ENABLE_ROBOTOMONO}")
+  message(STATUS "QATERIAL_ENABLE_LATO            : ${QATERIAL_ENABLE_LATO}")
+
+  message(STATUS "QATERIAL_ENABLE_TESTS           : ${QATERIAL_ENABLE_TESTS}")
+  message(STATUS "QATERIAL_ENABLE_INSTALL         : ${QATERIAL_ENABLE_INSTALL}")
+
+
+  message(STATUS "------ ${QATERIAL_TARGET} End Configuration ------")
+
+endif()
 
 # ───── QT DEPENDENCIES ─────
 
@@ -67,147 +99,125 @@ find_package(Qt5 REQUIRED COMPONENTS
   Xml
   QuickCompiler
 )
-find_package(Qt5 QUIET COMPONENTS QmlWorkerScript)
 
-# ───── FETCH DEPEDENCIES ─────
+# ───── FETCH DEPENDENCIES ─────
 
-include(cmake/FetchSpdlog.cmake)
+include(cmake/Dependencies.cmake)
 include(cmake/FetchQOlm.cmake)
+include(cmake/FetchQtGeneratorCMake.cmake)
+
+# ───── RESSOURCES ─────
+
+add_subdirectory(qml)
+include(cmake/QaterialGenerateIcons.cmake)
+set(QATERIAL_ICONS_OUTPUT_FOLDER "${CMAKE_CURRENT_BINARY_DIR}/Qaterial_icons")
+set(QATERIAL_ICONS_CLASS_FILE "${QATERIAL_ICONS_OUTPUT_FOLDER}/Qaterial/Display/Icons.hpp")
+set(QATERIAL_ICONS_SRC_FILE "${QATERIAL_ICONS_OUTPUT_FOLDER}/Qaterial/Display/Icons.cpp")
+qaterial_generate_icons_class(${QATERIAL_ICONS_CLASS_FILE} ${QATERIAL_ICONS_SRC_FILE})
+set(QATERIAL_GEN_SRCS
+  ${QATERIAL_ICONS_CLASS_FILE}
+  ${QATERIAL_ICONS_SRC_FILE}
+)
 
 # ───── QML SOURCES ─────
 
-file(GLOB_RECURSE QATERIAL_QML_SRCS qml/*.qml)
+set(QATERIAL_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/Qaterial)
 
-foreach(SOURCE IN ITEMS ${QATERIAL_QML_SRCS})
-  get_filename_component(SOURCE_PATH "${SOURCE}" PATH)
-  file(RELATIVE_PATH SOURCE_PATH_REL ${CMAKE_CURRENT_SOURCE_DIR}/qml "${SOURCE_PATH}")
-  string(REPLACE "/" "\\" GROUP_PATH "${SOURCE_PATH_REL}")
-  source_group("Qml\\${GROUP_PATH}" FILES "${SOURCE}")
-endforeach()
-
-include(cmake/FetchQtGeneratorCMake.cmake)
-include(cmake/FetchMaterialDesignIcons.cmake)
-
-qt_generate_qrc(QATERIAL_QML_ICONS_QRC
-  SOURCE_DIR ${MATERIALDESIGNICONS_ICONS_DIR}
-  NAME QaterialIcons.qrc
-  PREFIX "Qaterial/Icons"
-  GLOB_EXPRESSION ${QATERIAL_ICONS})
-
-qt_generate_qrc_alias_qt_object(QATERIAL_ICONS_QML
-  SOURCE_DIR ${MATERIALDESIGNICONS_ICONS_DIR}
-  NAME "${CMAKE_CURRENT_BINARY_DIR}/QaterialImplIconsGenerated/Icons.qml"
-  PREFIX "Qaterial/Icons"
-  GLOB_EXPRESSION ${QATERIAL_ICONS})
-
-file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/QaterialImplIconsGenerated/qmldir
-  "module Qaterial.Impl.Icons\n"
-  "Icons 1.0 Icons.qml\n"
-)
-
-qt_generate_qrc(QATERIAL_QML_ICONS_ALIAS_QRC
-  SOURCE_DIR "${CMAKE_CURRENT_BINARY_DIR}/QaterialImplIconsGenerated"
-  NAME QaterialIconsAliases.qrc
-  PREFIX "Qaterial/Impl/Icons"
-  GLOB_EXPRESSION "*.qml;qmldir;")
-
-qt_generate_qmldir(QATERIAL_QMLDIR_FILE
- SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/qml/Qaterial
- MODULE "Qaterial")
-
-qt_generate_qrc(QATERIAL_QML_QRC
-  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/qml/Qaterial
-  DEST_DIR ${CMAKE_CURRENT_BINARY_DIR}/QaterialGenerated
-  NAME Qaterial.qrc
-  PREFIX "Qaterial"
-  GLOB_EXPRESSION "*.qml;qmldir"
-  RECURSE)
-
-qt_generate_qrc(QATERIAL_FONTS_QML_QRC
-  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/qml/Qaterial
-  DEST_DIR ${CMAKE_CURRENT_BINARY_DIR}/QaterialGenerated
-  NAME QaterialFonts.qrc
-  PREFIX "Qaterial"
-  GLOB_EXPRESSION "*.ttf"
-  RECURSE)
-
-# Add qml to the qtquick compiler (should only be call once per target)
-qtquick_compiler_add_resources(QATERIAL_QML_RES ${QATERIAL_QML_QRC} ${QATERIAL_FONTS_QML_QRC} ${QATERIAL_QML_ICONS_QRC} ${QATERIAL_QML_ICONS_ALIAS_QRC})
-
-# Dont Run Moc on cpp file generated from qml
-foreach(QATERIAL_CURRENT_QML_FILE ${QATERIAL_QML_RES})
-  set_property(SOURCE ${QATERIAL_CURRENT_QML_FILE} PROPERTY SKIP_AUTOMOC ON)
-  source_group("Qml\\QtQuickCompiler Files" FILES ${QATERIAL_CURRENT_QML_FILE})
-endforeach()
-
-set(QATERIAL_IO_SRCS
-  include/Qaterial/TextFile.hpp
-  src/TextFile.cpp
-  include/Qaterial/Clipboard.hpp
-  src/Clipboard.cpp
-  include/Qaterial/FolderTreeModel.hpp
-  src/FolderTreeModel.cpp
-)
-
-set(QATERIAL_NAVIGATION_SRCS
-  include/Qaterial/StepperElement.hpp
-  src/StepperElement.cpp
-  include/Qaterial/TreeElement.hpp
-  src/TreeElement.cpp
-)
-
-set(QATERIAL_UTILS_SRCS
-  include/Qaterial/Qaterial.hpp
-  include/Qaterial/Export.hpp
-  include/Qaterial/Property.hpp
-  include/Qaterial/Version.hpp
-  src/Version.cpp
-  include/Qaterial/Utils.hpp
-  src/Utils.cpp
-  include/Qaterial/Logger.hpp
-  src/Logger.cpp
+set(QATERIAL_PUBLIC_HEADERS
+  ${QATERIAL_SOURCE_DIR}/Qaterial.hpp
+  ${QATERIAL_SOURCE_DIR}/Details/Export.hpp
+  ${QATERIAL_SOURCE_DIR}/Details/Utils.hpp
 )
 
 set(QATERIAL_SRCS
-  ${QATERIAL_IO_SRCS}
-  ${QATERIAL_NAVIGATION_SRCS}
-  ${QATERIAL_UTILS_SRCS}
-  ${QATERIAL_QML_RES}
-  ${QATERIAL_QML_SRCS}
+  ${QATERIAL_PUBLIC_HEADERS}
+  ${QATERIAL_SOURCE_DIR}/Display/IconDescription.hpp
+  ${QATERIAL_SOURCE_DIR}/Display/IconDescription.cpp
+  ${QATERIAL_SOURCE_DIR}/Display/IconLabelPositioner.hpp
+  ${QATERIAL_SOURCE_DIR}/Display/IconLabelPositioner.cpp
+  ${QATERIAL_SOURCE_DIR}/Display/IconLabelImpl.hpp
+  ${QATERIAL_SOURCE_DIR}/Display/IconLabelImpl.cpp
+
+  ${QATERIAL_SOURCE_DIR}/Theme/ColorTheme.hpp
+  ${QATERIAL_SOURCE_DIR}/Theme/ColorTheme.cpp
+  ${QATERIAL_SOURCE_DIR}/Theme/TextTheme.hpp
+  ${QATERIAL_SOURCE_DIR}/Theme/TextTheme.cpp
+  ${QATERIAL_SOURCE_DIR}/Theme/Theme.hpp
+  ${QATERIAL_SOURCE_DIR}/Theme/Theme.cpp
+
+  ${QATERIAL_SOURCE_DIR}/Layout/Layout.hpp
+  ${QATERIAL_SOURCE_DIR}/Layout/Layout.cpp
+
+  ${QATERIAL_SOURCE_DIR}/IO/TextFile.hpp
+  ${QATERIAL_SOURCE_DIR}/IO/TextFile.cpp
+  ${QATERIAL_SOURCE_DIR}/IO/Clipboard.hpp
+  ${QATERIAL_SOURCE_DIR}/IO/Clipboard.cpp
+  ${QATERIAL_SOURCE_DIR}/IO/FolderTreeModel.hpp
+  ${QATERIAL_SOURCE_DIR}/IO/FolderTreeModel.cpp
+
+  ${QATERIAL_SOURCE_DIR}/Navigation/StepperElement.hpp
+  ${QATERIAL_SOURCE_DIR}/Navigation/StepperElement.cpp
+  ${QATERIAL_SOURCE_DIR}/Navigation/TreeElement.hpp
+  ${QATERIAL_SOURCE_DIR}/Navigation/TreeElement.cpp
+
+  ${QATERIAL_SOURCE_DIR}/Details/Property.hpp
+  ${QATERIAL_SOURCE_DIR}/Details/Version.hpp
+  ${QATERIAL_SOURCE_DIR}/Details/Version.cpp
+  ${QATERIAL_SOURCE_DIR}/Details/Utils.cpp
 )
 
-source_group("IO" FILES ${QATERIAL_IO_SRCS})
-source_group("Navigation" FILES ${QATERIAL_NAVIGATION_SRCS})
-source_group("Utils" FILES ${QATERIAL_UTILS_SRCS})
+if(QATERIAL_ENABLE_HIGHDPIFIX)
+  set(QATERIAL_SRCS ${QATERIAL_SRCS}
+    ${QATERIAL_SOURCE_DIR}/Details/HighDpiFix.cpp
+  )
+endif()
+
+source_group(TREE "${QATERIAL_SOURCE_DIR}" FILES ${QATERIAL_SRCS})
+source_group(TREE "${QATERIAL_ICONS_OUTPUT_FOLDER}/Qaterial" FILES ${QATERIAL_GEN_SRCS})
+
+set(QATERIAL_SRCS ${QATERIAL_SRCS} ${QATERIAL_GEN_SRCS})
 
 # ───── QATERIAL TARGET ─────
 
 if(${QATERIAL_BUILD_SHARED})
   add_library(${QATERIAL_TARGET} SHARED ${QATERIAL_SRCS})
-  target_compile_definitions(${QATERIAL_TARGET} PUBLIC -DQATERIAL_SHARED)
+  target_compile_definitions(${QATERIAL_TARGET} PRIVATE -DQATERIAL_SHARED)
 else()
   add_library(${QATERIAL_TARGET} STATIC ${QATERIAL_SRCS})
   target_compile_definitions(${QATERIAL_TARGET} PUBLIC -DQATERIAL_STATIC)
 endif()
+add_library(${QATERIAL_TARGET}::${QATERIAL_TARGET} ALIAS ${QATERIAL_TARGET})
 
-target_compile_features(${QATERIAL_TARGET} PUBLIC cxx_std_11)
-target_include_directories(${QATERIAL_TARGET} PUBLIC include)
-if(QATERIAL_ENABLE_PCH AND COMMAND target_precompile_headers)
-  target_precompile_headers(${QATERIAL_TARGET} PRIVATE include/Qaterial/Pch/Pch.hpp)
-endif()
-target_link_libraries(${QATERIAL_TARGET} PUBLIC
-  spdlog
-  QOlm
-  Qt5::Core
-  Qt5::Gui
-  Qt5::Svg
-  Qt5::Xml
-  Qt5::Qml
-  Qt5::Quick
-  Qt5::QuickControls2
+target_compile_features(${QATERIAL_TARGET} PUBLIC cxx_std_17)
+target_include_directories(${QATERIAL_TARGET} PRIVATE src ${QATERIAL_ICONS_OUTPUT_FOLDER})
+target_include_directories(${QATERIAL_TARGET} PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+  $<INSTALL_INTERFACE:include>
 )
-set_target_properties(${QATERIAL_TARGET} PROPERTIES AUTORCC TRUE)
-set_target_properties(${QATERIAL_TARGET} PROPERTIES AUTOMOC TRUE)
+if(QATERIAL_ENABLE_PCH AND COMMAND target_precompile_headers)
+  target_precompile_headers(${QATERIAL_TARGET} PRIVATE src/Qaterial/Pch/Pch.hpp)
+endif()
+
+target_link_libraries(${QATERIAL_TARGET} PRIVATE
+  ${QATERIAL_TARGET}::Icons
+  ${QATERIAL_TARGET}::Fonts
+  ${QATERIAL_TARGET}::Components
+  QOlm::QOlm
+  Qt::Core
+  Qt::Gui
+  Qt::Svg
+  Qt::Xml
+  Qt::Qml
+  Qt::Quick
+  Qt::QuickControls2
+)
+
+set_target_properties(${QATERIAL_TARGET} PROPERTIES
+  AUTOMOC TRUE
+)
+if(QATERIAL_ENABLE_UNITY_BUILD)
+  set_target_properties(${QATERIAL_TARGET} PROPERTIES UNITY_BUILD ON)
+endif()
 
 # Version
 target_compile_definitions(${QATERIAL_TARGET}
@@ -224,28 +234,14 @@ endif()
 
 # Correctly link to static qt
 get_target_property(QT_TARGET_TYPE Qt5::Core TYPE)
-if(${QT_TARGET_TYPE} STREQUAL "STATIC_LIBRARY")
-  include(cmake/FetchQtStaticCMake.cmake)
-  qt_generate_qml_plugin_import(${QATERIAL_TARGET}
-    QML_SRC qml
-    EXTRA_PLUGIN
-      QtQuickVirtualKeyboardPlugin
-      QtQuickVirtualKeyboardSettingsPlugin
-      QtQuickVirtualKeyboardStylesPlugin
-      QmlFolderListModelPlugin
-    VERBOSE
-  )
-  qt_generate_plugin_import(${QATERIAL_TARGET} VERBOSE)
+if(NOT QATERIAL_ENABLE_INSTALL AND ${QT_TARGET_TYPE} STREQUAL "STATIC_LIBRARY")
+  include(${PROJECT_SOURCE_DIR}/cmake/FetchQtStaticCMake.cmake)
+  qt_generate_qml_plugin_import(${QATERIAL_TARGET} QML_SRC ${CMAKE_CURRENT_SOURCE_DIR}/qml)
+  qt_generate_plugin_import(${QATERIAL_TARGET})
 endif()
 
-if(TARGET Qt5::QmlWorkerScript)
-  target_link_libraries(${QATERIAL_TARGET} PUBLIC Qt5::QmlWorkerScript)
-endif()
-
-# ───── QATERIAL TOOLS ─────
-
-if(QATERIAL_ENABLE_HOTRELOAD OR QATERIAL_ENABLE_HOTRELOAD_LIB OR QATERIAL_ENABLE_HELLOWORLD)
-  add_subdirectory(tools)
+if(MSVC)
+  target_compile_options(${QATERIAL_TARGET} PUBLIC -bigobj)
 endif()
 
 # ───── QATERIAL TESTS ─────
@@ -253,4 +249,60 @@ endif()
 if(QATERIAL_ENABLE_TESTS)
   enable_testing()
   add_subdirectory(tests)
+endif()
+
+# ───── INSTALL ─────
+
+if (QATERIAL_ENABLE_INSTALL)
+  include(GNUInstallDirs)
+  install(TARGETS ${QATERIAL_TARGET}
+    EXPORT ${QATERIAL_TARGET}Targets
+  )
+
+  foreach(HDR_FILE ${QATERIAL_PUBLIC_HEADERS})
+    get_filename_component(HDR_DIRECTORY ${HDR_FILE} DIRECTORY)
+    get_filename_component(ABSOLUTE_HDR_DIRECTORY ${HDR_DIRECTORY} ABSOLUTE)
+    file(RELATIVE_PATH RELATIVE_HDR_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src ${ABSOLUTE_HDR_DIRECTORY})
+    install(FILES ${HDR_FILE} DESTINATION include/${RELATIVE_HDR_PATH})
+  endforeach()
+
+  include(CMakePackageConfigHelpers)
+  write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/${QATERIAL_TARGET}/${QATERIAL_TARGET}ConfigVersion.cmake"
+    VERSION ${QATERIAL_VERSION}
+    COMPATIBILITY AnyNewerVersion
+  )
+
+  export(EXPORT ${QATERIAL_TARGET}Targets
+    FILE "${CMAKE_CURRENT_BINARY_DIR}/${QATERIAL_TARGET}/${QATERIAL_TARGET}Targets.cmake"
+    NAMESPACE ${QATERIAL_TARGET}::
+  )
+
+  configure_file(cmake/${QATERIAL_TARGET}Config.cmake.in
+    "${CMAKE_CURRENT_BINARY_DIR}/${QATERIAL_TARGET}/${QATERIAL_TARGET}Config.cmake"
+    @ONLY
+  )
+
+  set(ConfigPackageLocation lib/cmake/${QATERIAL_TARGET})
+  install(EXPORT ${QATERIAL_TARGET}Targets
+    FILE
+    ${QATERIAL_TARGET}Targets.cmake
+    NAMESPACE
+    ${QATERIAL_TARGET}::
+    DESTINATION
+    ${ConfigPackageLocation}
+  )
+  install(
+    FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/${QATERIAL_TARGET}/${QATERIAL_TARGET}Config.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/${QATERIAL_TARGET}/${QATERIAL_TARGET}ConfigVersion.cmake"
+    DESTINATION
+    ${ConfigPackageLocation}
+  )
+endif()
+
+# ───── DUMP CONFIG ─────
+
+if(QATERIAL_MAIN_PROJECT)
+  include(cmake/PrintConfiguration.cmake)
 endif()

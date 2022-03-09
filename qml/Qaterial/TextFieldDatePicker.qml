@@ -14,16 +14,18 @@ Qaterial.TextFieldDate
     Qaterial.TextFieldIconButton
     {
       icon.source: Qaterial.Icons.calendar
-      onClicked: Qaterial.DialogManager.openFromComponent(_DatePickerDialog)
+      onClicked: Qaterial.DialogManager.openFromComponent(_datePickerDialogComponent)
 
       Component
       {
-        id: _DatePickerDialog
+        id: _datePickerDialogComponent
         Qaterial.DatePickerDialog
         {
           date: root.date
-          month: isNaN(date) ? new Date().getMonth() : root.date.getMonth()
-          year: isNaN(date) ? new Date().getFullYear() : root.date.getFullYear()
+          month: isNaN(date) ? new Date()
+            .getMonth() : root.date.getMonth()
+          year: isNaN(date) ? new Date()
+            .getFullYear() : root.date.getFullYear()
 
           from: root.from
           to: root.to

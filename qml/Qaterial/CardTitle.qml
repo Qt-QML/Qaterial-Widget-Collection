@@ -13,7 +13,7 @@ Item
 {
   id: _control
   implicitHeight: _column.implicitHeight
-  implicitWidth: 200//_column.implicitWidth
+  implicitWidth: 200 //_column.implicitWidth
 
   property alias headerText: _title.text
   property alias subHeaderText: _text.text
@@ -26,7 +26,7 @@ Item
 
   property alias padding: _column.padding
   property alias leftPadding: _column.leftPadding
-  property alias rightPadding : _column.rightPadding
+  property alias rightPadding: _column.rightPadding
   property alias topPadding: _column.topPadding
   property alias bottomPadding: _column.bottomPadding
 
@@ -45,26 +45,24 @@ Item
     anchors.right: parent.right
     anchors.left: parent.left
 
-    Qaterial.Label
+    Qaterial.LabelHeadline6
     {
       id: _title
-      textType: Qaterial.Style.TextType.Title
       elide: Text.ElideRight
       horizontalAlignment: _control.mirrored ? Text.AlignRight : Text.AlignLeft
       width: parent.width - _control.rightPadding - _control.leftPadding
 
       Qaterial.DebugRectangle
       {
-          anchors.fill: parent
-          border.color: "pink"
-          visible: _control.drawline
+        anchors.fill: parent
+        border.color: "pink"
+        visible: _control.drawline
       } // DebugRectangle
     } // Label
 
-    Qaterial.Label
+    Qaterial.LabelBody1
     {
       id: _text
-      textType: Qaterial.Style.TextType.ListSecText
       elide: Text.ElideRight
       horizontalAlignment: _control.mirrored ? Text.AlignRight : Text.AlignLeft
       width: parent.width - _control.rightPadding - _control.leftPadding

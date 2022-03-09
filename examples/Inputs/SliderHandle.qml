@@ -11,7 +11,7 @@ Row
 
   Timer
   {
-    interval: 1000; running: true; repeat: true
+    interval: 1000;running: true;repeat: true
     onTriggered: () => root.pressed = !root.pressed
   }
 
@@ -23,9 +23,7 @@ Row
     {
       spacing: 20
 
-      Qaterial.SliderHandle
-      {
-      }
+      Qaterial.SliderHandle {}
 
       Qaterial.SliderHandle
       {

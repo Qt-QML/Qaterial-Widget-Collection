@@ -17,9 +17,9 @@ T.MenuItem
   id: _control
 
   implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                          implicitContentWidth + leftPadding + rightPadding)
+    implicitContentWidth + leftPadding + rightPadding)
   implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
-                           implicitContentHeight + topPadding + bottomPadding)
+    implicitContentHeight + topPadding + bottomPadding)
 
   property bool drawline: Qaterial.Style.debug.drawDebugButton
 
@@ -39,28 +39,32 @@ T.MenuItem
   leftInset: Qaterial.Style.menuItem.leftInset
   rightInset: Qaterial.Style.menuItem.rightInset
 
-  leftPadding: (icon.source != "" && !mirrored || text == "" ? Qaterial.Style.menuItem.iconPadding : Qaterial.Style.menuItem.padding) + leftInset
-  rightPadding: (icon.source != "" && mirrored || text == "" ? Qaterial.Style.menuItem.iconPadding : Qaterial.Style.menuItem.padding) + rightInset
+  leftPadding: (icon.source != "" && !mirrored || text == "" ? Qaterial.Style.menuItem.iconPadding : Qaterial.Style
+    .menuItem.padding) + leftInset
+  rightPadding: (icon.source != "" && mirrored || text == "" ? Qaterial.Style.menuItem.iconPadding : Qaterial.Style
+    .menuItem.padding) + rightInset
   topPadding: 0
   bottomPadding: 0
   spacing: Qaterial.Style.menuItem.spacing
 
   property bool outlined: false
 
-  property color foregroundColor: enabled ? (colorReversed ? Qaterial.Style.primaryTextColorReversed() : Qaterial.Style.primaryTextColor()) :
-                                  (colorReversed ? Qaterial.Style.hintTextColorReversed() : Qaterial.Style.hintTextColor())
+  property color foregroundColor: enabled ? (colorReversed ? Qaterial.Style.primaryTextColorReversed() : Qaterial
+    .Style.primaryTextColor()) : (colorReversed ? Qaterial.Style.hintTextColorReversed() : Qaterial.Style
+    .hintTextColor())
 
   property color backgroundColor: "transparent"
 
-  property color rippleColor: Qaterial.Style.rippleColor(onPrimary ? Qaterial.Style.RippleBackground.Primary : Qaterial.Style.RippleBackground.Background)
+  property color rippleColor: Qaterial.Style.rippleColor(onPrimary ? Qaterial.Style.RippleBackground.Primary :
+    Qaterial.Style.RippleBackground.Background)
 
   property bool onPrimary: false
   property bool colorReversed: onPrimary && Qaterial.Style.shouldReverseForegroundOnPrimary
 
   property double radius: Qaterial.Style.menuItem.cornerRadius
 
-
-  readonly property var checkedIcon: QtObject
+  property
+  var checkedIcon: QtObject
   {
     readonly property double width: Qaterial.Style.menuItem.iconWidth
     readonly property double height: Qaterial.Style.menuItem.iconWidth
@@ -68,13 +72,16 @@ T.MenuItem
     readonly property url source: Qaterial.Icons.check
   } // QtObject
 
-  readonly property var radioIcon: QtObject
+  property
+  var radioIcon: QtObject
   {
-      readonly property double width: Qaterial.Style.menuItem.iconWidth
-      readonly property double height: Qaterial.Style.menuItem.iconWidth
-      readonly property color color: foregroundColor
-      readonly property url source: _control.checked ? Qaterial.Icons.radioboxMarked : Qaterial.Icons.radioboxBlank
+    readonly property double width: Qaterial.Style.menuItem.iconWidth
+    readonly property double height: Qaterial.Style.menuItem.iconWidth
+    readonly property color color: foregroundColor
+    readonly property url source: _control.checked ? Qaterial.Icons.radioboxMarked : Qaterial.Icons.radioboxBlank
   } // QtObject
+
+  font: Qaterial.Style.textTheme.body2
 
   icon.width: Qaterial.Style.menuItem.iconWidth
   icon.height: Qaterial.Style.menuItem.iconWidth
@@ -85,19 +92,25 @@ T.MenuItem
   property bool forceRipple: false
   property bool accentRipple: false
 
-  indicator: Qaterial.Label
+  indicator: Qaterial.LabelHint2
   {
     x: _control.mirrored ? _control.leftPadding : _control.width - width - _control.rightPadding
     y: _control.topPadding + (_control.availableHeight - height) / 2
     //width: _control.icon.width
     //height: _control.icon.height
     width: Qaterial.Style.menuItem.shortcutImplicitWidth
-    text: _control.action && _control.action.shortcut ? _control.action.shortcut : ""
-    visible: _control.action && _control.action.shortcut != ""
+    text: dummyShortcut.nativeText
+    visible: _control.action && dummyShortcut.nativeText != ""
     horizontalAlignment: _control.mirrored ? Qt.AlignRight : Qt.AlignLeft
-    textType: Qaterial.Style.TextType.MenuHint
     onPrimary: _control.onPrimary
     colorReversed: _control.colorReversed
+
+    Shortcut
+    {
+      id: dummyShortcut
+      enabled: false
+      sequence: _control.action ? _control.action.shortcut : ""
+    }
 
     Qaterial.DebugRectangle
     {
@@ -122,20 +135,26 @@ T.MenuItem
   {
     id: _iconLabel
 
-    readonly property real arrowPadding: _control.subMenu && _control.arrow ? _control.arrow.width + _control.spacing : 0
-    readonly property real indicatorPadding: _control.indicator && _control.indicator.visible ? _control.indicator.width + _control.spacing : 0
+    readonly property real arrowPadding: _control.subMenu && _control.arrow ? _control.arrow.width + _control
+      .spacing : 0
+    readonly property real indicatorPadding: _control.indicator && _control.indicator.visible ? _control.indicator
+      .width + _control.spacing : 0
     anchors.leftMargin: _control.mirrored ? indicatorPadding + arrowPadding : 0
     anchors.rightMargin: !_control.mirrored ? indicatorPadding + arrowPadding : 0
 
-    alwaysRenderIcon: true
+    //alwaysRenderIcon: true
 
-    alignment: Qt.AlignLeft
+    horizontalAlignment: Qt.AlignLeft
     elide: Text.ElideRight
 
     spacing: _control.spacing
     display: _control.display
-    textType: Qaterial.Style.TextType.Menu
-    icon: _control.icon
+    font: _control.font
+    icon.source: _control.icon.source
+    icon.width: _control.icon.width
+    icon.height: _control.icon.height
+    icon.color: _control.icon.color
+    icon.cache: _control.icon.cache
     text: _control.text
     color: _control.foregroundColor
   } // IconLabel
@@ -147,9 +166,9 @@ T.MenuItem
   {
     Qaterial.DebugRectangle
     {
-        anchors.fill: parent
-        border.color: "aquamarine"
-        visible: _control.drawline
+      anchors.fill: parent
+      border.color: "aquamarine"
+      visible: _control.drawline
     } // DebugRectangle
 
     implicitWidth: _control.backgroundImplicitWidth

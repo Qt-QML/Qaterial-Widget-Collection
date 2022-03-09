@@ -8,10 +8,11 @@ Qaterial.TextFieldClockButton
   minute: 30
 
   // Style of the clock, European by default
-  styleAm: true
+  styleAm: false
   // If Am/Pm style, time slot of the hour
   am: false // Pm
 
   // Listen to user changes
-  onHourAccepted: (hour, minute, am) => console.log(`User picked ${hour}:${minute} ${styleAm ? (am ? "AM" : "PM") : ""}`)
+  onHourAccepted: (hour, minute, am) => console.log(
+    `User picked ${hour}:${minute} ${styleAm ? (am ? "AM" : "PM") : ""}`)
 }

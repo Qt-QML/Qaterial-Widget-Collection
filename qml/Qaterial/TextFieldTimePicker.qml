@@ -4,7 +4,7 @@
  */
 
 // Qt
-import QtQuick 2.0
+import QtQuick 2.15
 
 // Qaterial
 import Qaterial 1.0 as Qaterial
@@ -22,8 +22,8 @@ Qaterial.TextField
 
   function pad(num, size)
   {
-    let s = num+"";
-    while (s.length < size) s = "0" + s;
+    let s = num + "";
+    while(s.length < size) s = "0" + s;
     return s;
   }
 
@@ -31,7 +31,10 @@ Qaterial.TextField
 
   title: "Time"
   placeholderText: "_ _ : _ _"
-  validator: RegExpValidator { regExp: root.styleAm ? /(0[1-9]|1[0-2]):[0-5][0-9]/ : /([01]?[0-9]|2[0-3]):[0-5][0-9]/ }
+  validator: RegularExpressionValidator
+  {
+    regularExpression: root.styleAm ? /(0[1-9]|1[0-2]):[0-5][0-9]/ : /([01]?[0-9]|2[0-3]):[0-5][0-9]/
+  }
   errorText: "Invalid Time Format"
 
   trailingVisible: true
@@ -41,8 +44,7 @@ Qaterial.TextField
     Qaterial.TextFieldIconButton
     {
       visible: root.styleAm
-      text: root.am ?"AM" : "PM"
-      textType: Qaterial.Style.TextType.Button
+      text: root.am ? "AM" : "PM"
       onClicked: root.am = !root.am
     }
 
@@ -135,8 +137,8 @@ Qaterial.TextField
         }
         else if(characters[1].length === 2)
         {
-        text = `0${characters[0][0]}:${characters[1]}`
-        cursorPosition = 5
+          text = `0${characters[0][0]}:${characters[1]}`
+          cursorPosition = 5
         }
       }
     }

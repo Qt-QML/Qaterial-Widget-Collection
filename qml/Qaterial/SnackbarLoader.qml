@@ -11,15 +11,15 @@ import QtQuick.Controls 2.12
 import Qaterial 1.0 as Qaterial
 
 /**
-  * @brief Manager that creates snack bar dinamically
-  */
+ * @brief Manager that creates snack bar dynamically
+ */
 Item
 {
   id: _root
   // Use to force the display off of the snackbar bar
   property bool displaySnackbar: false
   // If the snackbar can be kill before the end of it's lifetime
-  property bool canBeKilled: (settings && (settings.canBeKilled !== undefined))? settings.canBeKilled : true
+  property bool canBeKilled: (settings && (settings.canBeKilled !== undefined)) ? settings.canBeKilled : true
 
   z: Infinity
 
@@ -31,11 +31,11 @@ Item
   // Snackbar component that is instantiated
   Component
   {
-    id:_snackbarComp
+    id: _snackbarComp
 
     Qaterial.Snackbar
     {
-      id : _snackbar
+      id: _snackbar
 
       opacity: 0
 
@@ -46,16 +46,16 @@ Item
       // Indicate that the snackbar is about to be destroyed (and fade out animation is playing)
       property bool pendingDestroy
 
-      text : _root.settings && _root.settings.text ? _root.settings.text : ""
-      action: _root.settings && _root.settings.action ? _root.settings.action: ""
+      text: _root.settings && _root.settings.text ? _root.settings.text : ""
+      action: _root.settings && _root.settings.action ? _root.settings.action : ""
 
-      onActionPressed :
+      onActionPressed:
       {
         if(_root.settings && _root.settings.onAccept)
         {
-            _root.settings.onAccept()
-            actionCalled = true
-            goToPendingDestroy()
+          _root.settings.onAccept()
+          actionCalled = true
+          goToPendingDestroy()
         }
       }
 
@@ -133,12 +133,14 @@ Item
   Loader
   {
     anchors.horizontalCenter: parent.horizontalCenter
-    anchors.bottom : parent.bottom
+    anchors.bottom: parent.bottom
     id: _snackbarLoader
   } // Loader
 
-  property var settings: null
-  property var settingsQueue: []
+  property
+  var settings: null
+  property
+  var settingsQueue: []
 
   /**
    * Show a snackbar immediatly or after the current snackbar.
@@ -177,7 +179,7 @@ Item
   function popSnackBar()
   {
     var nextSnackbarSetting = settingsQueue.shift()
-    if (nextSnackbarSetting)
+    if(nextSnackbarSetting)
       show(nextSnackbarSetting)
   } // function popSnackBar()
 } // Item

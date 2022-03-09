@@ -1,12 +1,8 @@
-// ──── INCLUDE ────
-
 #include <Qaterial/Qaterial.hpp>
 
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QCommandLineParser>
-
-// ──── FUNCTIONS ────
+#include <QtCore/QCommandLineParser>
+#include <QtGui/QGuiApplication>
+#include <QtQml/QQmlApplicationEngine>
 
 int main(int argc, char* argv[])
 {
@@ -18,7 +14,10 @@ int main(int argc, char* argv[])
     QGuiApplication::setOrganizationName("Qaterial");
     QGuiApplication::setApplicationName("Qaterial Tests Loader");
     QGuiApplication::setOrganizationDomain("https://olivierldff.github.io/Qaterial/");
-    QGuiApplication::setApplicationVersion(qaterial::Version::version().readable());
+    const QString version = QString::number(qaterial::versionMajor()) + QStringLiteral(".") + QString::number(qaterial::versionMinor())
+                            + QStringLiteral(".") + QString::number(qaterial::versionPatch()) + QStringLiteral(".0x")
+                            + QString::number(qaterial::versionTag(), 16).rightJustified(8, QChar('0'));
+    QGuiApplication::setApplicationVersion(version);
 
     QCommandLineParser parser;
     parser.addPositionalArgument("source", QCoreApplication::translate("main", "Source file to load."));
@@ -49,13 +48,11 @@ int main(int argc, char* argv[])
     engine.load(sourceUrl);
     if(engine.rootObjects().isEmpty())
     {
-        const QString error = "Fail to load " + source;
-        qWarning(error.toUtf8());
+        qWarning() << "Fail to load " << source;
         return -1;
     }
 
     // Success load
-    const QString info = "Success load " + source;
-    qDebug(info.toUtf8());
+    qInfo() << "Success load " << source;
     return 0;
 }

@@ -18,15 +18,14 @@ Rectangle
     anchors.bottom: parent.bottom
     anchors.left: parent.left
     anchors.right: parent.right
-    height: parent.height/2
+    height: parent.height / 2
     color: parent.color
   }
 
-  Qaterial.Label
+  Qaterial.LabelHeadline4
   {
     leftPadding: 20
     anchors.verticalCenter: parent.verticalCenter
-    textType: Qaterial.Style.TextType.Heading
     text: root.text
     color: Qaterial.Style.textColorDark
   }

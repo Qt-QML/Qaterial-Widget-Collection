@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.15
 import Qaterial 1.0 as Qaterial
 
 Column
@@ -6,13 +6,13 @@ Column
   id: _column
   width: 400
 
-  Qaterial.TextField  // Demonstrate required
+  Qaterial.TextField // Demonstrate required
   {
     id: _nameInput
     width: _column.width
     title: "Name *"
     placeholderText: "What do people call you?"
-    validator: RegExpValidator { regExp: /[A-Za-z]+/ }
+    validator: RegularExpressionValidator { regularExpression: /[A-Za-z]+/ }
     errorText: "Name is required"
     inputMethodHints: Qt.ImhSensitiveData
     leadingIconSource: Qaterial.Icons.account
@@ -56,10 +56,10 @@ Column
     title: "Salary"
     prefixText: "$"
     suffixText: "USD"
-    suffixTextType: Qaterial.Style.TextType.Overline
+    //suffixTextType: Qaterial.Style.TextType.Overline
     suffixTextColor: "#8BC34A"
     placeholderText: "Enter your Salary"
-    validator: RegExpValidator { regExp: /[0-9]*[.,]?[0-9]{0,2}/ }
+    validator: RegularExpressionValidator { regularExpression: /[0-9]*[.,]?[0-9]{0,2}/ }
     inputMethodHints: Qt.ImhFormattedNumbersOnly
   } // TextField
 
@@ -72,18 +72,18 @@ Column
     maximumLengthCount: 16
     inputMethodHints: Qt.ImhSensitiveData
     trailingVisible: errorState
-    trailingContent: Qaterial.TextFieldAlertIcon { } // TextFieldAlertIcon
+    trailingContent: Qaterial.TextFieldAlertIcon {} // TextFieldAlertIcon
   } // TextField
 
-  Qaterial.TextField// Demonstrate show hidden
+  Qaterial.TextField // Demonstrate show hidden
   {
     width: _column.width
     title: "Password *"
     placeholderText: "Enter your password"
     helperText: "Please input more than 8 characters"
-    validator: RegExpValidator { regExp: /.{8,}/ }
+    validator: RegularExpressionValidator { regularExpression: /.{8,}/ }
     echoMode: TextInput.Password
     inputMethodHints: Qt.ImhSensitiveData
-    trailingContent: Qaterial.TextFieldPasswordButton { } // TextFieldPasswordButton
+    trailingContent: Qaterial.TextFieldPasswordButton {} // TextFieldPasswordButton
   } // TextField
 }

@@ -7,29 +7,34 @@ Qaterial.Expandable
 
   header: Qaterial.ItemDelegate
   {
-    id: _header
     text: "Header"
     onClicked: () => root.expanded = !root.expanded
 
-    contentItem: Qaterial.Label
+    contentItem: Qaterial.LabelHeadline6
     {
       text: parent.text
-      textType: Qaterial.Style.TextType.Title
       horizontalAlignment: Text.AlignHCenter
       verticalAlignment: Text.AlignVCenter
     }
 
-    Qaterial.DebugRectangle { anchors.fill: parent; border.color: Qaterial.Style.green }
+    Qaterial.DebugRectangle
+    {
+      anchors.fill: parent;
+      border.color: Qaterial.Style.green
+    }
   }
 
-  delegate: Qaterial.Label
+  delegate: Qaterial.LabelHeadline6
   {
     text: "Delegate"
-    textType: Qaterial.Style.TextType.Title
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter
     height: 100
 
-    Qaterial.DebugRectangle { anchors.fill: parent; border.color: Qaterial.Style.amber }
+    Qaterial.DebugRectangle
+    {
+      anchors.fill: parent;
+      border.color: Qaterial.Style.amber
+    }
   }
 } // Expandable

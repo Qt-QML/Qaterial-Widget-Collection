@@ -16,10 +16,10 @@ T.Switch
   id: _control
 
   implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                          implicitContentWidth + leftPadding + rightPadding + implicitIndicatorWidth)
+    implicitContentWidth + leftPadding + rightPadding + implicitIndicatorWidth)
   implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
-                           implicitContentHeight + topPadding + bottomPadding,
-                           implicitIndicatorHeight + topPadding + bottomPadding)
+    implicitContentHeight + topPadding + bottomPadding,
+    implicitIndicatorHeight + topPadding + bottomPadding)
 
   horizontalPadding: Qaterial.Style.switchButton.horizontalPadding
   verticalPadding: Qaterial.Style.switchButton.verticalPadding
@@ -31,8 +31,7 @@ T.Switch
 
   property bool drawline: Qaterial.Style.debug.drawDebugButton
 
-  property alias elide: _label.elide
-  property alias textType: _label.textType
+  font: Qaterial.Style.textTheme.body2
 
   Qaterial.DebugRectangle
   {
@@ -43,7 +42,8 @@ T.Switch
 
   indicator: Qaterial.SwitchIndicator
   {
-    x: text ? (_control.mirrored ? _control.width - width - _control.rightPadding : _control.leftPadding) : _control.leftPadding + (_control.availableWidth - width) / 2
+    x: text ? (_control.mirrored ? _control.width - width - _control.rightPadding : _control.leftPadding) : _control
+      .leftPadding + (_control.availableWidth - width) / 2
     y: _control.topPadding + (_control.availableHeight - height) / 2
     control: _control
 
@@ -55,7 +55,8 @@ T.Switch
       height: Qaterial.Style.switchButton.rippleWidth
       pressed: _control.pressed
       active: _control.down || _control.visualFocus || _control.hovered
-      color: Qaterial.Style.rippleColor(_control.checked ? Qaterial.Style.RippleBackground.AccentLight : Qaterial.Style.RippleBackground.Background)
+      color: Qaterial.Style.rippleColor(_control.checked ? Qaterial.Style.RippleBackground.AccentLight : Qaterial
+        .Style.RippleBackground.Background)
     } // Ripple
 
     Qaterial.DebugRectangle
@@ -68,7 +69,6 @@ T.Switch
 
   contentItem: Qaterial.Label
   {
-    id: _label
     leftPadding: (text && _control.indicator && !_control.mirrored) ? _control.indicator.width + _control.spacing : 0
     rightPadding: (text && _control.indicator && _control.mirrored) ? _control.indicator.width + _control.spacing : 0
 
@@ -76,6 +76,7 @@ T.Switch
     colorReversed: _control.colorReversed
 
     text: _control.text
+    font: _control.font
     enabled: _control.enabled
     elide: !_control.mirrored ? Text.ElideRight : Text.ElideLeft
     verticalAlignment: Text.AlignVCenter

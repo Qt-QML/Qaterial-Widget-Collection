@@ -27,7 +27,7 @@ Qaterial.TextArea
       onPrimary: _control.onPrimary
       colorReversed: _control.colorReversed
       rightPadding: _view.ScrollBar.vertical.implicitWidth
-      topPadding:  _control.textAreaTopPadding
+      topPadding: _control.textAreaTopPadding
       bottomPadding: _control.textAreaBottomPadding
 
       leftPadding: _control.textAreaLeftPadding
@@ -37,7 +37,6 @@ Qaterial.TextArea
       onLinkHovered: _control.linkHovered(link)
 
       forcePlaceholderOff: !_control.titleUp
-      textType: _control.textType
       placeholderText: _control.placeholderText
       text: _control.text
       wrapMode: _control.wrapMode
